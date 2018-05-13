@@ -1,0 +1,39 @@
+\chapter{人脸检测算法}
+\label{chap:facedetection}
+
+人脸检测算法自上世纪以来已经被无数研究者探究过，检测的准确率也是逐年提高。在本系统中，我们需要的是一个能够优秀的处理大角度人脸、模糊人脸甚至部分被遮挡人脸的检测算法。在保证非常高的准确率的同时，该算法需要有非常快的执行速度，以适应同时处理大量图片的需求。
+
+CFDDB测试集中全部的人脸数量为$face_{all}$，检测正确的人脸数量为$face_{right}$,定义检测率$r$为：
+
+\begin{displaymath}
+\label{eq:rdef}
+	r = \frac{face_{right}}{face_{all}} 
+\end{displaymath}
+
+以CFDDB中的图片为标准，我们要求人脸检测算法需要在 定义的$r\geq 80\%$的情况下，在一张Nvidia 1080 Ti显卡的支持下处理一张宽1600像素，高1200像素的图片的平均速度不超过\SI{250}{ms}。
+
+为了简化测试过程，我们要求在正式测试前，人脸检测算法需要在CFDDB中随机抽取的五张图片中$r\geq 75\%$。
+
+
+\section{基于HAAR特征的级联分类器}
+
+\subsection{概述}
+
+
+
+\subsection{在CFDDB上的测试结果}
+
+
+\section{HOG}
+
+\subsection{概述}
+
+\subsection{在CFDDB上的测试结果}
+
+
+\section{SSH}
+
+\subsection{概述}
+
+\subsection{在CFDDB上的测试结果}
+
