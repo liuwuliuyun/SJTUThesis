@@ -85,22 +85,34 @@ HAAR特征在物体检测领域有着广泛的应用，在2001年，Paul Viola�
 
 \begin{figure}[!htp]
 	\centering
-	\subcaptionbox{边特征\label{fig:haartest:speed1}}
-	{\includegraphics[height=3cm]{chap2/4.jpg}}
-	\hspace{4em}
-	\subcaptionbox{四矩形特征\label{fig:haartest:speed2}}
-	{\includegraphics[height=3cm]{chap2/5.jpg}}
-	\hspace{4em}
+	\includegraphics[height=7cm]{chap2/4.jpg}
+	\bicaption{scaleFactor与minNeighbor参数对于处理速度的影响}{How parameter scaleFactor and minNeighbor affects processing speed}
 	\label{fig:haartest:speed}
 \end{figure}
 
-HAAR级联分类器在CFDDB上检测率最高尚未超过$50\%$，没有达到本系统的需求
+\subsubsection{准确率}
 
-\section{HOG}
+HAAR级联分类器在CFDDB上检测率最高尚未超过$50\%$，没有达到本系统的需求。经过分析，共有两种原因影响了HAAR分类器在CFDDB上的检测效果：
 
-\subsection{概述}
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[height=4cm]{chap2/5.jpg}
+	\bicaption{有角度和被遮挡的人脸识别结果示例}{Example of angled faces and partially blocked faces}
+	\label{fig:haartest:acc}
+\end{figure}
 
-\subsection{在CFDDB上的测试结果}
+第一，HAAR分类器是针对正脸训练的，对侧脸和被遮挡人脸的检测效果非常差。我们将检测结果可视化之后取其中的一张图片分析，如图\ref{fig:haartest:acc}所示。红色的矩形框是HAAR分类器检测到的人脸区域，绿色的矩形框是人工标注的人脸区域。可以看到，只要人脸的角度过大，或者被其他人或物体遮挡，HAAR分类器的检测效果就会大打折扣。
+
+第二，由于HAAR分类器对边缘信息特别敏感，使得在有些情况下会产生错误的识别结果，当minNeighbor=2并且scaleFactor=1.1时，如图\ref{fig:haartest:acc2}所示，HAAR分类器经常会将衣服的褶皱误识别为人脸，将特殊的边缘识别成人脸。
+
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[height=4cm]{chap2/6.jpg}
+	\bicaption{HAAR分类器误识别示例}{Haar cascade classifier misidentification example}
+	\label{fig:haartest:acc2}
+\end{figure}
+
+综上所述，基于HAAR特征的级联分类器存在诸多限制，准确率难以达到要求，并不适合作为本系统的人脸检测模块使用。
 
 
 \section{SSH}
