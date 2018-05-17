@@ -10,7 +10,7 @@ CFDDB测试集中全部的人脸数量为$face_{all}$，检测正确的人脸数
 	r = \frac{face_{right}}{face_{all}} 
 \end{displaymath}
 
-以CFDDB中的图片为标准，我们要求人脸检测算法需要在 定义的$r\geq 80\%$的情况下，在一张Nvidia 1080 Ti显卡的支持下处理一张宽1600像素，高1200像素的图片的平均速度不超过\SI{250}{ms}。
+以CFDDB中的图片为标准，我们要求人脸检测算法需要在 定义的$r\geq 80\%$的情况下，在一张Nvidia 1080 Ti显卡的支持下处理一张宽1600像素，高1200像素的图片的平均速度不超过\SI{500}{ms}。
 
 
 \section{基于HAAR特征的级联分类器}
@@ -138,9 +138,72 @@ MtCNN中共包括三个不同的网络，总体的架构图\ref{fig:mtcnn}所示
 	\label{fig:mtcnn}
 \end{figure}
 
-\subsection{title}
+在接收到一张图片之后，首先将其缩放得到图片金字塔。所得到的图像金字塔是三个级联卷积网络的输入。
+
+第一阶段，我们使用一种全卷积网络叫做Proposal Network(P-Net)来获得候选人脸区域和它们的边界框回归向量[11]。接着使用边界框回归向量去校准候选区域。最后使用非极大值抑制(NMS)整合高度重合的区域。
+
+第二阶段，我们使用另一种卷积网络叫做Refine Network(R-Net)来进一步筛选得到的区域[11]。在筛选结束之后，与第一阶段相同，使用边界框回归对人脸边界进行进一步校准。最后使用NMS整合重合区域。
+
+第三阶段与第二阶段基本相似，但是在这一阶段我们主要对脸部更精细的特征进行描述[11]。这一阶段使用Output Network(O-Net)得到人脸区域的五个特征点。
+
+\subsection{Loss函数设计}
+
+对于每一个样本$x_i$，人脸区域区分部分的Loss函数 其中$p_i$是网络输出结果是人脸区域的概率，$y_i^{det}\in\{0,1\}$是该区域是否是人脸的标签[11]。
+\begin{displaymath}
+	L_{i}^{det}=-((y_{i}^{det}log(p_{i}))+(1-y_{i}^{det})(1-log(p_i)))
+\end{displaymath}
+
+
+
+边界框回归的Loss函数 其中$\hat{y}_i^{box}$是由网络得出的结果，$y_i^{box}$是实际的边界框。
+\begin{displaymath}
+	L_{i}^{box}=||{\hat{y}_i^{box}-y_i^{box}}||_2^2
+\end{displaymath}
+
+
+
+脸部特征回归的Loss函数 与边界框类似，使用了Euclidean Loss。
+\begin{displaymath}
+L_{i}^{landmark}=||{\hat{y}_i^{landmark}-y_i^{landmark}}||_2^2
+\end{displaymath}
+
+
 
 \subsection{在CFDDB上的测试结果}
+
+我们使用预训练完成的MtCNN在CFDDB上进行测试，测试中使用了TensorFlow 1.7.1版本，并使用GPU加速网络运算。测试结果如表\ref{tab:mtcnn}所示，其中confidence表示所取MtCNN输出的人脸区域信任率，averageTime表示平均处理一张图片所需要的时间。
+
+\begin{table}[!hpb]
+	\centering
+	\bicaption[MtCNN在CFDDB上的测试结果]
+	{MtCNN在CFDDB上的测试结果}
+	{MtCNN test results on CFDDB}
+	\label{tab:mtcnn}
+	\begin{tabular}{ cccc | c }
+		\hline
+		confidence & faceDetected & faceRight & averageTime & r\\
+		\hline
+		0.90 & 433 & 388 & 344.38ms & $35.69\%$\\
+		0.80 & 465 & 410 & 325.71ms & $37.71\%$\\
+		0.70 & 483 & 423 & 357.41ms & $38.91\%$\\
+		0.60 & 483 & 423 & 333.66ms & $38.91\%$\\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{结果分析}
+
+\subsubsection{处理速度}
+
+不同的confidence参数处理时间基本一致，均为350ms左右的时间处理一张宽1600像素，高1200像素的图片。由于使用了GPU加速运算，并且将原有的Matlab平台的代码成功移植到了更先进的TensorFlow平台[13]，MtCNN处理速度符合我们的要求。
+
+\subsubsection{准确率}
+
+在CFDDB测试集中，MtCNN最多正确检测出了423个人脸区域，检测率最高为$38.91\%$，识别率较低，无法符合我们的要求。
+
+原因一：对侧脸的识别，五个特征点不完整的人脸识别率较低
+
+原因二：CFDDB数据量的问题
 
 
 \section{SSH}
