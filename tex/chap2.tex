@@ -199,12 +199,20 @@ L_{i}^{landmark}=||{\hat{y}_i^{landmark}-y_i^{landmark}}||_2^2
 
 \subsubsection{准确率}
 
-在CFDDB测试集中，MtCNN最多正确检测出了423个人脸区域，检测率最高为$38.91\%$，识别率较低，无法符合我们的要求。
+在CFDDB测试集中，MtCNN最多正确检测出了423个人脸区域，检测率最高为$38.91\%$，识别率较低，无法符合我们的要求。但是根据论文[11]在WiderFace中最难的测试集上，MtCNN都有着超过$60\%$的召回率，然而在CFDDB上却无法体现。经过分析，可能的原因有以下两条：
 
-原因一：对侧脸的识别，五个特征点不完整的人脸识别率较低
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[height=5cm]{chap2/8.png}
+	\bicaption{MtCNN 识别结果可视化样例}{MtCNN detect results example}
+	\label{fig:mtcnn:accr}
+\end{figure}
 
-原因二：CFDDB数据量的问题
 
+原因一：对侧脸的识别，五个特征点不完整的人脸识别率较低。CFDDB中有大量侧脸和不完整人脸，如图\ref{fig:mtcnn:accr}所示，其中人脸1俯仰左右都有较大的角度，难以识别；人脸2部分被遮挡，无法提取完整的五个特征点，因此被舍弃；人脸3俯仰角度过大，难以识别。
+
+
+原因二：CFDDB数据分布的问题，由于数据中样本采集采用的从连续的视频中截取帧的方法，前后两次截取得到的图片差距不大，这样容易导致前一张图片中识别不出的图像往往在下一张图像中一样难以识别。这个问题需要通过扩充CFDDB的样本规模，去除相似度高的图像来解决。
 
 \section{SSH}
 
