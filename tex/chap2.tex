@@ -214,12 +214,84 @@ L_{i}^{landmark}=||{\hat{y}_i^{landmark}-y_i^{landmark}}||_2^2
 
 原因二：CFDDB数据分布的问题，由于数据中样本采集采用的从连续的视频中截取帧的方法，前后两次截取得到的图片差距不大，这样容易导致前一张图片中识别不出的图像往往在下一张图像中一样难以识别。这个问题需要通过扩充CFDDB的样本规模，去除相似度高的图像来解决。
 
-\section{SSH}
+\section{SSH检测器}
 
 \subsection{概述}
+SSH的全称为Single Stage Headless face detector，由Mahyar等人提出[14]。SSH检测器针对小脸进行了优化，对处于自然环境的人脸识别有着非常好的效果。在WIDER FACE Hard测试集的测试中，SSH检测器的召回率达到了0.844[14]，从检测效果来看，更加符合我们这个系统的需求。
 
+与其他同样基于CNN的人脸检测器相比SSH检测器有如下四个特点：
 
+首先，大多数基于CNN的人脸检测器只针对一种特定大小的人脸进行了训练。因此，在使用的时候需要先建立图像金字塔，然后对图像金字塔中的每一张图片在训练好的网络中前向传播，合并所有前向传播的输出得到结果。而SSH检测器设计了针对三种不同大小人脸的检测器，从不同的网络层中提取信息，使得SSH检测器在使用的时候只需要一次前向传播就可以完成所有大小的人脸检测而无需建立图像金字塔。
+
+其次，大多数基于CNN的人脸检测器将人脸分为两个阶段。第一阶段，浅层的卷积特征图产生候选边界框集合。第二阶段，剩余的分类网络用于从集合中提取局部特征并将其分类。在这样的设计中，在第二阶段必须对第一阶段所有产生的候选框进行计算，从而需要极高的计算代价。而SSH检测器在一个阶段同时完成了边界框回归和最后的分类运算，因此计算代价更小。
+
+再次，在达到国际领先的检测水平的同时，SSH检测器舍弃了基础VGG-16网络中含有大量参数的全连接层，使得训练过程更加容易。同时，也使得网络整体变得轻量快速。
+
+最后， SSH检测器针对每个检测模块分别采用了Online hard negative and positive mining[15]的方法进行训练，使得训练得到的模型误报率更低，更加精确。
+
+\subsection{网络结构}
+
+论文[14]中的图\ref{fig:ssh:arc}展示了SSH检测器的总体架构。从图中可以看出，SSH检测器是一个全卷积深度网络，通过在步长分别为8、16和32的特征图上添加如论文[14]中图\ref{fig:ssh:det}所示的检测模块，实现了利用网络定位和区分人脸区域的功能。检测模块则由二元卷积分类器和回归运算模块组成。
+
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[height=7cm]{chap2/8.jpg}
+	\bicaption{SSH 检测器总体架构}{SSH face detector general architecture}
+	\label{fig:ssh:arc}
+\end{figure}
+
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[height=3cm]{chap2/9.jpg}
+	\bicaption{SSH 检测模块}{SSH detection module}
+	\label{fig:ssh:det}
+\end{figure}
+
+\begin{figure}[!htp]
+	\centering
+	\includegraphics[height=3cm]{chap2/10.jpg}
+	\bicaption{SSH 背景环境模块}{SSH context module}
+	\label{fig:ssh:context}
+\end{figure}
+
+正如SSH检测器概述中所述，SSH检测器为单阶段检测器，并没有产生边界框候选集的阶段。事实上，SSH检测器通过对预先定义的边界框集进行回归而得到人脸区域的。而这个边界框集是通过密集的、重叠的滑动窗口所定义的。
+
+而对于检测模块而言，有一系列的卷积层用于检测人脸的面部特征和位置定位，其中就包括了一个背景环境模块，如论文[14]中图\ref{fig:ssh:context}。这个背景环境模块用于提高感受野的有效性，从而提高网络的检测精度。背景环境在人脸较小或者不清晰的时候可以向检测器提供非常重要的信息。因为当人脸面部信息被遮挡或者不清晰的时候，人脸周围的背景环境例如衣领、头发等信息可以作为面部区域的关键的辅助信息传入网络中，帮助网络断定这个区域是否为人脸区域。
+
+事实上，在另一个由Peiyun Hu等人提出的小脸检测器的论文中[17]详细叙述了背景区域对于小脸检测的重要性。根据论文中的叙述，增加背景环境信息几乎总是有效的，无论对于大脸还是小脸。作者在实验中发现唯一降低了识别准确率的情况是向宽25像素，高25像素的小脸区域加入了超过宽300像素，高300像素的背景信息区域。而这种情况识别率降低的主要原因是向感受野中加入了明显过多的背景信息而导致了检测器发生了过拟合现象。
 
 
 \subsection{在CFDDB上的测试结果}
+
+我们使用预训练完成的SSH检测器在CFDDB上进行测试，测试中使用了GPU加速网络运算。测试结果如表\ref{tab:ssh}所示，其中confidence表示所取SSH检测器输出的人脸区域信任率，averageTime表示平均处理一张图片所需要的时间。
+
+\begin{table}[!hpb]
+	\centering
+	\bicaption[SSH检测器在CFDDB上的测试结果]
+	{SSH在CFDDB上的测试结果}
+	{SSH test results on CFDDB}
+	\label{tab:ssh}
+	\begin{tabular}{ cccc | c }
+		\hline
+		confidence & faceDetected & faceRight & averageTime & r\\
+		\hline
+		0.90 & 921 & 915 & 228.37ms & $85.10\%$\\
+		0.80 & 957 & 950 & 227.76ms & $87.39\%$\\
+		0.70 & 975 & 966 & 226.67ms & $88.87\%$\\
+		0.60 & 989 & 980 & 229.27ms & $90.16\%$\\
+		0.50 & 1008 & 998 & 230.43ms & $91.81\%$\\
+		\hline
+	\end{tabular}
+\end{table}
+
+\subsection{结果分析}
+
+\subsubsection{处理速度}
+
+不同的confidence参数处理时间基本一致，均为230ms左右的时间处理一张宽1600像素，高1200像素的图片。由于使用了GPU加速运算，而且SSH检测器使用了轻量级的网络，使得处理时间完全满足系统需求。
+
+\subsubsection{准确率}
+
+在CFDDB测试集中，SSH检测器最多正确检测出了998个人脸区域，识别率高达$91.81\%$。即使将confidence参数调高至0.9，识别率任然达到了$85.1\%$，超过了$80\%$的要求。因此，SSH检测器的准确率也完全可以满足系统的需求，适合作为人脸检测模块的核心算法。
+
 
