@@ -17,6 +17,8 @@
 
 第二，网络结构。与使用CNN网络的人脸检测器类似，研究者们也为人脸识别设计了许多不同的网络。常见的有ResNet系列网络[25]，VGG系列网络[26]和MobileNets等等。
 
-第三，Loss函数。
+第三，Loss函数。不同的神经网络有着不同的Loss函数设计，常见的有Euclidean margin based loss和Angular and cosine margin based loss两大类。
+
+而ArcFace[28]所使用的训练数据为MS-Celeb-1M[23]数据集，网络结构基于VGG2[27]，使用一种全新提出的additive angular margin作为Loss函数。
 
 \section{在CFDDB上的测试结果}
