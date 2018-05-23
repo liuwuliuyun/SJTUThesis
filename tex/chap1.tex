@@ -1,20 +1,24 @@
 \chapter{CFDDB测试集的建立}
 \label{chap:establishCFDDB}
 
-在选择正确的算法之前，我们应当选择或者建立一套测试集，以检测算法执行的效果。在人脸检测和识别的领域，已经有数量众多的公开数据集用于训练和测试，常见的有WIDER FACE[4]，FDDB[5]，LFW[6]等等。然而这些数据集中的人脸大多是欧美人，而且每张照片中的人脸数量也有限，如图\ref{fig:chap1:picfromwider}。而如图\ref{fig:chap1:picfromcfddb} 所示我们从监控录像中提取的图片亚洲人偏多，人脸往往是模糊的，大角度的，或是被遮挡的。因此，现有的测试集无法满足我们的测试需求，根据这个需要我们建立了自己的测试集CFDDB(Classroom Face Detection Database)。
+在选择正确的算法之前，我们应当选择或者建立一套测试集，以检测算法执行的效果。在人脸检测和识别的领域，已经有数量众多的公开数据集用于训练和测试，常见的有WIDER FACE[4]，FDDB[5]，LFW[6]等等。然而这些数据集中的人脸大多是欧美人，而且每张照片中的人脸数量也有限，如图\ref{fig:chap1:pic}。而从监控录像中提取的图片亚洲人偏多，人脸往往是模糊的，大角度的，或是被遮挡的。因此，现有的测试集无法满足我们的测试需求，根据这个需要我们建立了自己的测试集CFDDB(Classroom Face Detection Database)。
+
 
 \begin{figure}[!htp]
 	\centering
-	\includegraphics[height=6cm]{chap1/1.jpg}
-	\bicaption{WiderFace 测试集中的一张图片}{A picture from WiderFace}
-	\label{fig:chap1:picfromwider}
-\end{figure}
-
-\begin{figure}[!htp]
-	\centering
-	\includegraphics[height=6cm]{chap1/2.jpg}
-	\bicaption{CFDDB 测试集中的一张图片}{A picture from CFDDB}
-	\label{fig:chap1:picfromcfddb}
+	\begin{subfigure}{6cm}
+		\centering
+		\includegraphics[width=6cm,height=4cm]{chap1/1.jpg}
+		\caption{WiderFace 测试集样例图片}
+	\end{subfigure}
+	\hspace{4em}
+	\begin{subfigure}{6cm}
+		\centering
+		\includegraphics[width=6cm,height=4cm]{chap1/2.jpg}
+		\caption{CFDDB 测试集样例图片}
+	\end{subfigure}
+	\bicaption{WIDER FACE与CFDDB样例图片对比图}{Sample picture comparision between WIDER FACE and CFDDB}
+	\label{fig:chap1:pic}
 \end{figure}
 
 
@@ -109,6 +113,8 @@ CFDDB测试集既可以用来测试无感知人脸检测算法的准确性，又
 
 \section{CFDDB测试参数定义}
 
+以下三个参数均用于测试人脸检测算法的准确性，其中参数$\alpha$为结合召回率和误判率两种参数的综合测试指标。
+
 CFDDB测试集中全部的人脸数量为$face_{all}$，检测正确的人脸数量为$face_{right}$,定义召回率$recall$为：
 
 \begin{displaymath}
@@ -127,7 +133,7 @@ CFDDB测试集中召回率为$recall$，误判率$errorrate$，定义参数$\alp
 
 \begin{displaymath}
 \label{eq:alphadef}
-\alpha = \frac{1}{recall} + \frac{1}{errorrate*10}
+\alpha = \frac{1}{recall} + 10\cdot errorrate
 \end{displaymath}
 
 \section{CFDDB测试集属性分析}
@@ -140,7 +146,7 @@ CFDDB测试集由于专注与教时课程这个特殊的场景，适用于对用
 
 \subsection{肤色}
 
-与WIDER FACE数据集中多种肤色的人脸不同，CFDDB中的人脸全部是肤色为黄色的亚洲人。
+与WIDER FACE数据集中多种肤色的人脸不同，CFDDB中的人脸全部是肤色为黄色的亚洲人。未来可能添加包括多种肤色的图片使得测试者可以根据不同的测试场景需要选择肤色。
 
 \subsection{遮挡}
 
@@ -197,6 +203,12 @@ CFDDB测试集由于专注与教时课程这个特殊的场景，适用于对用
 	\bicaption{CFDDB属性分析}{CFDDB properties analysis}
 	\label{fig:cfddbeval}
 \end{figure}
+
+\section{CFDDB测试集的改进}
+
+CFDDB由于采用了从视频流中截取连续帧的方法，使得有部分图片之间差异性较小。从而导致在测试检测算法时，如果在某张图片上效果不好，则在与之相邻的相同场景的图片上效果依然不好。这样会导致容易积累同样的错误从而CFDDB检测结果出现偏差。对于这种问题，需要通过使用更多的资源对数据库进行扩充来解决。如果数据量足够大，就可以稀释相似图片的积累错误，从而使得评价结果更加客观准确。
+
+目前CFDDB采用通过剪裁截取到的图片计算类中心的方法建立人脸标准数据库。事实上这种方法只能粗略测得识别算法的准确性。更符合无感知检测场景的方法应当是由视频中出现人物的一张或多张证件照提取人脸特征向量，在对这些向量求类中心之后，得到人脸标准数据库中的人脸特征信息。目前受限于隐私保护，尚无法获得数据库中出现人脸的证件信息。这个问题有两种解决方法。第一种方法为招募志愿者，并提供完整的隐私保护政策，收集证件的照片信息。第二种方法为与受信任的机构合作，例如学校、医院，在学生或员工同意的情况下请机构提供证件的照片信息。
 
 \section{CFDDB测试集的扩充}
 

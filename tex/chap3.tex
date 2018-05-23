@@ -9,6 +9,15 @@
 
 在实际算法中，大多数算法在识别之前都有将人脸校正的需要。校正操作就是通过检测到人脸的多个特征点进行运算，从而将带有较大角度的人脸转换为相应正脸的过程。由于这种过程需要检测人脸的特征点，大多数算法都使用了在人脸检测算法中提到的MtCNN网络进行校正操作。
 
+如果全部可识别的人脸数量为$face_{all}$，识别正确的人脸数量为$face_{right}$定义召回率$recall$为：
+
+\begin{displaymath}
+\label{eq:rrdef}
+recall = \frac{face_{right}}{face_{all}} 
+\end{displaymath}
+
+由于CFDDB目前只能粗略测得人脸识别算法的准确性，我们要求合格的人脸识别算法需要$recall>50\%$。
+
 \section{ArcFace简介}
 
 使用深度神经网络检测人脸的方法有很多，它们主要的不同点有三个：
@@ -22,3 +31,26 @@
 而ArcFace[28]所使用的训练数据为MS-Celeb-1M[23]数据集，网络结构基于VGG2[27]，使用一种全新提出的additive angular margin作为Loss函数。
 
 \section{在CFDDB上的测试结果}
+
+下表\ref{tab:arcface}展示了ArcFace在CFDDB上的测试结果。其中参数confidence表示两特征向量的最小信任值。即如果一张图片的特征向量与人脸标准数据库中所有的特征向量的点积值均低于confidence，则认为该图片中的人脸不属于人脸标准数据库中的任何一张人脸。参数faceRecongnized参数表示当前属于人脸标准数据库中的人脸数量，参数faceRecognizeRight表示识别正确的人脸数量。
+
+\begin{table}[!hpb]
+	\centering
+	\bicaption[ArcFace在CFDDB上的测试结果]
+	{ArcFace在CFDDB上的测试结果}
+	{ArcFace test results on CFDDB}
+	\label{tab:arcface}
+	\begin{tabular}{ ccc | c }
+		\hline
+		confidence & faceRecognized & faceRecognizeRight &  recall\\
+		\hline
+		0.90 & 249 & 193 & $77.51\%$\\
+		0.80 & 412 & 558 & $73.84\%$\\
+		0.70 & 543 & 711 & $76.37\%$\\
+		0.60 & 838 & 649 & $77.44\%$\\
+		0.50 & 916 & 691 & $75.44\%$\\
+		\hline
+	\end{tabular}
+\end{table}
+
+分析表\ref{tab:arcface}中的测试结果可以看出，调整confidence参数从0.5至0.9，召回率均超过$70\%$，符合系统的要求。
