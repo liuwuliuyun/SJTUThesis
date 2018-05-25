@@ -5,9 +5,9 @@
 
 事实上，我们可以将得到高维人脸特征向量的过程看作是一种映射。我们使用的深度神经网络就是一种映射函数。相同或相似的人脸图像由这种映射函数得到的向量具有较近的距离，而差异较大的人脸图像经过映射得到的向量具有较远的距离。
 
-特征向量间的距离定义也有很多种，有些是欧式距离，有些是角度距离。而如果网络输出的特征向量都进行了标准化处理，就可以用两个特征向量的点积作为距离的衡量标准。在这种情况下，两个特征向量的点积越接近1，则两个特征向量对应的人脸就越相像；越接近-1，则两个特征向量对应的人脸差异越大。
+特征向量间的距离定义也有很多种，有些是欧式距离，有些是角度距离。而如果网络输出的特征向量都进行了标准化处理，就可以用两个特征向量的点积作为距离的衡量标准。在这种情况下，两个特征向量的点积越接近$1$，则两个特征向量对应的人脸就越相像；越接近$-1$，则两个特征向量对应的人脸差异越大。
 
-在实际算法中，大多数算法在识别之前都有将人脸校正的需要。校正操作就是通过检测到人脸的多个特征点进行运算，从而将带有较大角度的人脸转换为相应正脸的过程。由于这种过程需要检测人脸的特征点，大多数算法都使用了在人脸检测算法中提到的MtCNN网络进行校正操作。
+在实际算法中，大多数算法在识别之前都有将人脸校正的需要。校正操作就是通过检测到人脸的多个特征点进行运算，从而将带有较大角度的人脸转换为相应正脸的过程。由于这种过程需要检测人脸的特征点，大多数算法都使用了在人脸检测算法中提到的MtCNN网络\cite{zhang2016joint}进行校正操作。
 
 如果全部可识别的人脸数量为$face_{all}$，识别正确的人脸数量为$face_{right}$定义召回率$recall$为：
 
@@ -18,17 +18,17 @@ recall = \frac{face_{right}}{face_{all}}
 
 由于CFDDB目前只能粗略测得人脸识别算法的准确性，我们要求合格的人脸识别算法需要$recall>50\%$。
 
-\section{ArcFace简介}
+\section{ArcFace\cite{deng2018arcface}简介}
 
 使用深度神经网络检测人脸的方法有很多，它们主要的不同点有三个：
 
-第一，训练数据。对于深度神经网络而言，通常训练数据越多，得到的模型就越精确。人脸识别中使用的公开训练数据集主要有VGG-Face[19]，VGG2-Face[20]，CAISA-WebFace[21]，UMDFaces[22]，MS-Celeb-1M[23]和Megaface[24]。而Google等公司的私有数据集甚至拥有数百万的不同人脸数据，可以训练出商用的人脸识别网络。
+第一，训练数据。对于深度神经网络而言，通常训练数据越多，得到的模型就越精确。人脸识别中使用的公开训练数据集主要有VGG-Face\cite{parkhi2015deep}，VGG2-Face\cite{cao2017vggface2}，CASIA-WebFace\cite{yi2014learning}，UMDFaces\cite{bansal2017umdfaces}，MS-Celeb-1M\cite{guo2016msceleb}和Megaface\cite{nech2017level}等。而Google等公司的私有数据集甚至拥有数百万的不同人脸数据，可以训练出商用的人脸识别网络。
 
-第二，网络结构。与使用CNN网络的人脸检测器类似，研究者们也为人脸识别设计了许多不同的网络。常见的有ResNet系列网络[25]，VGG系列网络[26]和MobileNets等等。
+第二，网络结构。与使用CNN网络的人脸检测器类似，研究者们也为人脸识别设计了许多不同的网络。常见的有ResNet系列网络\cite{he2016deep}，VGG系列网络\cite{simonyan2014very}和MobileNets\cite{howard2017mobilenets}等等。
 
 第三，Loss函数。不同的神经网络有着不同的Loss函数设计，常见的有Euclidean margin based loss和Angular and cosine margin based loss两大类。
 
-而ArcFace[28]所使用的训练数据为MS-Celeb-1M[23]数据集，网络结构基于VGG2[27]，使用一种全新提出的additive angular margin作为Loss函数。
+而我们使用的ArcFace其训练数据为MS-Celeb-1M\cite{guo2016msceleb}数据集，网络结构基于MobileNets\cite{howard2017mobilenets}，使用一种全新提出的additive angular margin作为Loss函数。
 
 \section{在CFDDB上的测试结果}
 
