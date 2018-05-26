@@ -1,24 +1,24 @@
 \chapter{人脸识别算法}
 \label{facerecognition}
 
-在检测到人脸区域的之后就需要对区域内的人脸图像进行特征提取和识别。目前最先进的人脸识别思路是将人脸 图片经过深度神经网络的处理得到高维的人脸特征向量。然后使用这些特征向量进行人脸搜索、人脸分类和人脸识别。
+在检测到人脸区域的之后就需要对区域内的人脸图像进行特征提取和识别。目前最先进的人脸识别思路是将人脸图片经过深度神经网络的处理得到高维的人脸特征向量。然后使用这些特征向量进行人脸搜索与匹配。
 
 事实上，我们可以将得到高维人脸特征向量的过程看作是一种映射。我们使用的深度神经网络就是一种映射函数。相同或相似的人脸图像由这种映射函数得到的向量具有较近的距离，而差异较大的人脸图像经过映射得到的向量具有较远的距离。
 
 特征向量间的距离定义也有很多种，有些是欧式距离，有些是角度距离。而如果网络输出的特征向量都进行了标准化处理，就可以用两个特征向量的点积作为距离的衡量标准。在这种情况下，两个特征向量的点积越接近$1$，则两个特征向量对应的人脸就越相像；越接近$-1$，则两个特征向量对应的人脸差异越大。
 
-在实际算法中，大多数算法在识别之前都有将人脸校正的需要。校正操作就是通过检测到人脸的多个特征点进行运算，从而将带有较大角度的人脸转换为相应正脸的过程。由于这种过程需要检测人脸的特征点，大多数算法都使用了在人脸检测算法中提到的MtCNN网络\cite{zhang2016joint}进行校正操作。
+在实际算法中，大多数算法在识别之前都有将人脸校正的需要。校正操作就是通过检测到人脸的多个特征点进行运算，从而将带有较大角度的人脸转换为相应正脸的过程。由于这种过程需要检测人脸的特征点，许多算法都使用了在人脸检测算法中提到的MtCNN网络\cite{zhang2016joint}进行校正操作。
 
 如果全部可识别的人脸数量为$face_{all}$，识别正确的人脸数量为$face_{right}$定义召回率$recall$为：
 
-\begin{displaymath}
+\begin{equation}
 \label{eq:rrdef}
 recall = \frac{face_{right}}{face_{all}} 
-\end{displaymath}
+\end{equation}
 
 由于CFDDB目前只能粗略测得人脸识别算法的准确性，我们要求合格的人脸识别算法需要$recall>50\%$。
 
-\section{ArcFace\cite{deng2018arcface}简介}
+\section{InsightFace\cite{deng2018arcface}简介}
 
 使用深度神经网络检测人脸的方法有很多，它们主要的不同点有三个：
 
@@ -28,11 +28,11 @@ recall = \frac{face_{right}}{face_{all}}
 
 第三，Loss函数。不同的神经网络有着不同的Loss函数设计，常见的有Euclidean margin based loss和Angular and cosine margin based loss两大类。
 
-而我们使用的ArcFace其训练数据为MS-Celeb-1M\cite{guo2016msceleb}数据集，网络结构基于MobileNets\cite{howard2017mobilenets}，使用一种全新提出的additive angular margin作为Loss函数。
+而我们使用的InsightFace其训练数据为MS-Celeb-1M\cite{guo2016msceleb}与VGG2\cite{cao2017vggface2}数据集，网络结构基于MXNet\cite{chen2015mxnet}，使用additive angular margin作为Loss函数。由于InsightFace在Megaface测试集上取得了国际领先的测试结果，我们选择它作为人脸识别模块的核心方法。
 
 \section{在CFDDB上的测试结果}
 
-下表\ref{tab:arcface}展示了ArcFace在CFDDB上的测试结果。其中参数confidence表示两特征向量的最小信任值。即如果一张图片的特征向量与人脸标准数据库中所有的特征向量的点积值均低于confidence，则认为该图片中的人脸不属于人脸标准数据库中的任何一张人脸。参数faceRecongnized参数表示当前属于人脸标准数据库中的人脸数量，参数faceRecognizeRight表示识别正确的人脸数量。
+下表\ref{tab:arcface}展示了ArcFace在CFDDB上的测试结果。其中参数confidence表示两特征向量的最小信任值。即如果一张图片的特征向量与人脸标准数据库中所有的特征向量的点积值均低于confidence，则认为该图片中的人脸不属于人脸标准数据库中的任何一张人脸。参数faceRecongnized参数表示当前人脸标准数据库中的可识别的人脸数量，参数faceRecognizeRight表示识别正确的人脸数量。
 
 \begin{table}[!hpb]
 	\centering

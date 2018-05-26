@@ -5,28 +5,23 @@
 
 \begin{abstract}
 
-无感知人脸识别系统是一种不依赖待检测者主动配合的人脸识别系统。这种系统利用监控摄像头的实时画面，对其中的人脸进行检测、计数和识别。在教室点名、公司打卡签到等实际场景中有广泛的应用。由于不依赖于被检测人的配合，无感知人脸的图像会呈现偏转、模糊和遮挡等特征，这对检测、识别和检索算法都提出了非常高的要求。在本系统中，我们充分利用深度学习在人脸检测和识别的优势，选取了SSH算法\cite{najibi2017ssh}进行人脸检测，选取了ArcFace算法\cite{deng2018arcface}进行识别。于此同时，我们还从实际监控摄像中提取数据，建立了无感知检测和识别的测试集CFDDB。
+无感知人脸识别系统是一种不依赖待检测者主动配合的人脸识别系统。这种系统利用监控摄像头的实时画面，对其中的人脸进行检测、计数和识别。在教室点名、公司打卡签到等实际场景中有广泛的应用。由于不依赖于被检测人的配合，人脸的图像会呈现偏转、模糊和遮挡等特征，这对检测与识别算法都提出了非常高的要求。在本系统中，我们充分利用深度学习在人脸检测和识别的优势，选取了SSH检测器\cite{najibi2017ssh}进行人脸检测，InsightFace\cite{deng2018arcface}进行人脸识别。我们还从实际监控摄像中提取数据，建立了无感知人脸检测的测试集CFDDB。并在CFDDB上定义了基准参数，以分析不同人脸检测算法的优劣。
 
-在本系统中另一个突出的问题是如何并行处理大量的图片识别请求，针对这个问题，本系统采用GPU服务器来对核心算法进行加速。同时设计了使用Kubernetes管理Docker容器，并将容器和GPU绑定的架构。通过这种架构设计，本系统将不仅支持GPU热插拔，而且极大的缩短了系统升级的停机时间，最终实现一个高效可靠的无感知人脸识别系统。
+如何解决不同规模数据下的人脸特征向量的匹配本系统需要解决的另一个问题。本文中探讨了使用线性搜索和多类支持向量机匹配小规模数据，使用基于局部敏感哈希的近似搜索匹配大规模数据的方法。同时给出了基于局部敏感哈希匹配算法的优化思路。
 
+在解决了人脸的检测、识别和匹配问题后，本文最后阐述了系统的数据架构、物理架构和逻辑架构设计。使得本系统具有高效、稳定、可扩展的特性。
 
-\keywords{\large 人脸检测 \quad 无感知 \quad 模糊搜索 \quad 深度学习}
+\keywords{\large 无感知人脸检测 \quad 近似搜索 \quad 深度学习}
 \end{abstract}
 
 \begin{englishabstract}
 
-An imperial edict issued in 1896 by Emperor Guangxu, established Nanyang Public School in Shanghai. The normal school, school of foreign studies, middle school and a high school were established. Sheng Xuanhuai, the person responsible for proposing the idea to the emperor, became the first president and is regarded as the founder of the university.
+Imperceptible face recognition system is a face recognition system which does not require intentional cooperation from users. This system pulls live images of faces from CCTV at first. Then it performs face detection, face counting and face recognition to get face embeddings. Finally, it matches face embeddings to database contents. This system can be widely used for student attendance management and access control in companies. Since this system does not rely on users’ cooperation, the facial images received would be angled, blurred and occluded, which makes detection and recognition very challenging. We use deep-learning based methods to present a robust solution. In this system, SSH detector\cite{najibi2017ssh} is used for face detection and InsightFace\cite{deng2018arcface} is used for face recognition. And we also introduce CFDDB dataset as a face detection benchmark. 
 
-During the 1930s, the university gained a reputation of nurturing top engineers. After the foundation of People's Republic, some faculties were transferred to other universities. A significant amount of its faculty were sent in 1956, by the national government, to Xi'an to help build up Xi'an Jiao Tong University in western China. Afterwards, the school was officially renamed Shanghai Jiao Tong University.
+Another challenge is matching face embeddings. For small-scale datasets, we use linear search and multi-class SVM. For large-scale datasets, we use algorithms based on locality sensitive hashing and discuss some optimization methods.
 
-Since the reform and opening up policy in China, SJTU has taken the lead in management reform of institutions for higher education, regaining its vigor and vitality with an unprecedented momentum of growth. SJTU includes five beautiful campuses, Xuhui, Minhang, Luwan Qibao, and Fahua, taking up an area of about 3,225,833 m2. A number of disciplines have been advancing towards the top echelon internationally, and a batch of burgeoning branches of learning have taken an important position domestically.
+We present our system’s data architecture, physical architecture and logical architecture at the end. This architecture design keeps imperceptible face recognition system efficient, stable and scalable.
 
-Today SJTU has 31 schools (departments), 63 undergraduate programs, 250 masters-degree programs, 203 Ph.D. programs, 28 post-doctorate programs, and 11 state key laboratories and national engineering research centers.
-
-SJTU boasts a large number of famous scientists and professors, including 35 academics of the Academy of Sciences and Academy of Engineering, 95 accredited professors and chair professors of the "Cheung Kong Scholars Program" and more than 2,000 professors and associate professors.
-
-Its total enrollment of students amounts to 35,929, of which 1,564 are international students. There are 16,802 undergraduates, and 17,563 masters and Ph.D. candidates. After more than a century of operation, Jiao Tong University has inherited the old tradition of "high starting points, solid foundation, strict requirements and extensive practice." Students from SJTU have won top prizes in various competitions, including ACM International Collegiate Programming Contest, International Mathematical Contest in Modeling and Electronics Design Contests. Famous alumni include Jiang Zemin, Lu Dingyi, Ding Guangen, Wang Daohan, Qian Xuesen, Wu Wenjun, Zou Taofen, Mao Yisheng, Cai Er, Huang Yanpei, Shao Lizi, Wang An and many more. More than 200 of the academics of the Chinese Academy of Sciences and Chinese Academy of Engineering are alumni of Jiao Tong University.
-
-\englishkeywords{\large SJTU, master thesis, XeTeX/LaTeX template}
+\englishkeywords{\large imperceptible face detection, approximate nearest neighbor search, deep-learning}
 \end{englishabstract}
 
