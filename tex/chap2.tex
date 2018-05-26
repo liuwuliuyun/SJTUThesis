@@ -9,7 +9,7 @@
 \section{基于HAAR特征的级联分类器}
 
 \subsection{概述}
-HAAR特征在物体检测领域有着广泛的应用，在2001年，Paul Viola和Michael Jones在论文\parencite{viola2004robust}中提出了使用HAAR特征来检测人脸的方法。这种方法的基本思想是在一系列含有人脸区域的正图像和不含人脸的负图像上训练一系列的分类器，然后将分类器级联组合，得到完成的人脸检测函数。在分类器的训练中，我们通过提取提取如图\ref{fig:HAAR}所示的三种不同种类HAAR特征来判断一个特定的区域是否属于人脸区域。
+HAAR特征在物体检测领域有着广泛的应用，在2001年，Paul Viola和Michael Jones在论文中提出了使用HAAR特征来检测人脸的方法\cite{viola2004robust}。这种方法的基本思想是在一系列含有人脸区域的正图像和不含人脸的负图像上训练一系列的分类器，然后将分类器级联组合，得到完成的人脸检测函数。在分类器的训练中，我们通过提取提取如图\ref{fig:HAAR}所示的三种不同种类HAAR特征来判断一个特定的区域是否属于人脸区域。
 
 \begin{figure}[!htp]
 	\centering
@@ -31,9 +31,9 @@ HAAR特征在物体检测领域有着广泛的应用，在2001年，Paul Viola�
 
 首先，对每个特征进行训练，让它可以在训练集上尽可能区分开有人脸的图片和没有人脸的图片。接着计算这个特征的错误率。在所有特征都训练完毕之后选取错误率最小的部分特征作为需要的特征保留。最后，将选取的特征加权求和，作为一个分类器使用。
 
-根据论文\parencite{viola2004robust}中的叙述，每一个特征单独的分类效果较差，但是将所有特征加权求和得到的分类器则非常强大。使用200特征则可达到$95\%$以上的准确率。论文\parencite{viola2004robust}中最终的分类器使用了约6000个特征，具有非常强大的检测能力。
+每一个特征单独的分类效果较差，但是将所有特征加权求和得到的分类器则非常强大。使用200特征则可达到$95\%$以上的准确率。最终的分类器使用了约6000个特征，具有非常强大的检测能力\cite{viola2004robust}。
 
-然而，对于一张图片所有可能的区域计算6000个特征仍然是一件非常耗时的工作，对此，作者提出了使用级联分类器的方法来解决。所谓级联，就是将分类器串接起来，只有通过前面分类器检测的图片区域才会继续进行下一分类器的检测。论文\parencite{viola2004robust}中的分类器共有38级，平均每个区域的识别所需要提取约10个特征。这样的方式极大的加快了分类器的处理速度。
+然而，对于一张图片所有可能的区域计算6000个特征仍然是一件非常耗时的工作，对此，作者提出了使用级联分类器的方法来解决。所谓级联，就是将分类器串接起来，只有通过前面分类器检测的图片区域才会继续进行下一分类器的检测。最终的分类器共有38级，平均每个区域的识别所需要提取约10个特征\cite{viola2004robust}。这样的方式极大的加快了分类器的处理速度。
 
 \subsection{在CFDDB上的测试结果}
 
@@ -121,12 +121,12 @@ MtCNN的全称是多任务级联卷积网络，由Kaipeng Zhang等人中提出�
 
 \subsection{总体架构}
 
-MtCNN中共包括三个不同的网络，总体的架构如论文\parencite{zhang2016joint}中的图\ref{fig:mtcnn}所示：
+MtCNN中共包括三个不同的网络，三个不同的网络，即P-Net, R-Net与O-Net，如图\ref{fig:mtcnn}所示：
 
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=7cm]{chap2/7.jpg}
-	\bicaption{MtCNN 总体架构图}{MtCNN overall pipeline}
+	\bicaption{MtCNN 总体架构图\cite{zhang2016joint}}{MtCNN overall pipeline\cite{zhang2016joint}}
 	\label{fig:mtcnn}
 \end{figure}
 
@@ -191,7 +191,7 @@ L_{i}^{landmark}=||{\hat{y}_i^{landmark}-y_i^{landmark}}||_2^2
 
 \subsubsection{准确率}
 
-在CFDDB测试集中，MtCNN最多正确检测出了423个人脸区域，检测率最高为$38.91\%$，识别率较低，无法符合我们的要求。但是根据论文\parencite{zhang2016joint}在WIDER FACE中的Hard测试集上，MtCNN都有着超过$60\%$的召回率，然而在CFDDB上却无法体现。经过分析，可能的原因有以下两条：
+在CFDDB测试集中，MtCNN最多正确检测出了423个人脸区域，检测率最高为$38.91\%$，识别率较低，无法符合我们的要求。但是在WIDER FACE中的Hard测试集上，MtCNN都有着超过$60\%$的召回率\cite{zhang2016joint}，然而在CFDDB上却无法体现。经过分析，可能的原因有以下两条：
 
 \begin{figure}[!htp]
 	\centering
@@ -223,40 +223,40 @@ SSH的全称为Single Stage Headless face detector\cite{najibi2017ssh}，由Mahy
 
 \subsection{网络结构}
 
-论文\parencite{najibi2017ssh}中的图\ref{fig:ssh:arc}展示了SSH检测器的总体架构。从图中可以看出，SSH检测器是一个全卷积深度网络，通过在步长分别为8、16和32的特征图上添加如论文\parencite{najibi2017ssh}中图\ref{fig:ssh:det}所示的检测模块，实现了利用网络定位和区分人脸区域的功能。检测模块则由二元卷积分类器和回归运算模块组成。
+图\ref{fig:ssh:arc}展示了SSH检测器的总体架构。从图中可以看出，SSH检测器是一个全卷积深度网络，通过在步长分别为8、16和32的特征图上添加图\ref{fig:ssh:det}所示的检测模块，实现了利用网络定位和区分人脸区域的功能。检测模块则由二元卷积分类器和回归运算模块组成。
 
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=7cm]{chap2/8.jpg}
-	\bicaption{SSH 检测器总体架构}{SSH face detector general architecture}
+	\bicaption{SSH 检测器总体架构\cite{najibi2017ssh}}{SSH face detector general architecture\cite{najibi2017ssh}}
 	\label{fig:ssh:arc}
 \end{figure}
 
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=3cm]{chap2/9.jpg}
-	\bicaption{SSH 检测模块}{SSH detection module}
+	\bicaption{SSH 检测模块\cite{najibi2017ssh}}{SSH detection module\cite{najibi2017ssh}}
 	\label{fig:ssh:det}
 \end{figure}
 
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=3cm]{chap2/10.jpg}
-	\bicaption{SSH 背景环境模块}{SSH context module}
+	\bicaption{SSH 背景环境模块\cite{najibi2017ssh}}{SSH context module\cite{najibi2017ssh}}
 	\label{fig:ssh:context}
 \end{figure}
 
 SSH检测器为单阶段检测器，并没有产生边界框候选集的阶段。事实上，SSH检测器通过对预先定义的边界框集进行回归而得到人脸区域的。而边界框集是通过密集的、重叠的滑动窗口所定义的。
 
-而对于检测模块而言，有一系列的卷积层用于检测人脸的面部特征和位置定位，其中就包括了一个背景环境模块，如论文\parencite{najibi2017ssh}中图\ref{fig:ssh:context}。这个背景环境模块用于提高感受野的有效性，从而提高网络的检测精度。背景环境在人脸较小或者不清晰的时候可以向检测器提供非常重要的信息。因为当人脸面部信息被遮挡或者不清晰的时候，人脸周围的背景环境例如衣领、头发等信息可以作为面部区域的关键的辅助信息传入网络中，帮助网络断定这个区域是否为人脸区域。
+而对于检测模块而言，有一系列的卷积层用于检测人脸的面部特征和位置定位，其中就包括了一个背景环境模块，如图\ref{fig:ssh:context}。这个背景环境模块用于提高感受野的有效性，从而提高网络的检测精度。背景环境在人脸较小或者不清晰的时候可以向检测器提供非常重要的信息。因为当人脸面部信息被遮挡或者不清晰的时候，人脸周围的背景环境例如衣领、头发等信息可以作为面部区域的关键的辅助信息传入网络中，帮助网络断定这个区域是否为人脸区域。
 
-事实上，在另一个由Peiyun Hu等人提出的Tiny face检测器\cite{hu2017finding}的论文中详细叙述了背景区域对于小脸检测的重要性。根据论文中的叙述，增加背景环境信息几乎总是有效的，无论对于大脸还是小脸。Peiyun Hu等人在实验中发现唯一降低了识别准确率的情况是向宽25像素，高25像素的小脸区域加入了超过宽300像素，高300像素的背景信息区域。而这种情况识别率降低的主要原因是向感受野中加入了明显过多的背景信息而导致了检测器出现了过拟合现象。
+事实上，在另一个由Peiyun Hu等人提出的Tiny face检测器\cite{hu2017finding}在论文中详细叙述了背景区域对于小脸检测的重要性。根据论文中的叙述，增加背景环境信息几乎总是有效的，无论对于大脸还是小脸。Peiyun Hu等人在实验中发现唯一降低了识别准确率的情况是向宽25像素，高25像素的小脸区域加入了超过宽300像素，高300像素的背景信息区域。而这种情况识别率降低的主要原因是向感受野中加入了明显过多的背景信息而导致了检测器出现了过拟合现象。
 
 
 \subsection{在CFDDB上的测试结果}
 \label{chap2:sshresult}
 
-我们使用论文\parencite{najibi2017ssh}预训练完成的SSH检测器在CFDDB上进行测试，选用Caffe作为框架平台，测试中使用了GPU加速网络运算。测试结果如表\ref{tab:ssh}所示，其中confidence表示所取SSH检测器输出的人脸区域信任率，averageTime表示平均处理一张图片所需要的时间。
+我们使用预训练完成的SSH检测器在CFDDB上进行测试，选用Caffe作为框架平台，测试中使用了GPU加速网络运算。测试结果如表\ref{tab:ssh}所示，其中confidence表示所取SSH检测器输出的人脸区域信任率，averageTime表示平均处理一张图片所需要的时间。
 
 \begin{table}[!hpb]
 	\centering
@@ -301,7 +301,7 @@ SSH检测器为单阶段检测器，并没有产生边界框候选集的阶段�
 
 \subsection{概述}
 
-Tiny face检测器，是由Peiyun Hu等人在论文\parencite{hu2017finding}中提出的一种针对小脸进行优化处理的人脸检测器，也是最早针对小脸进行检测的深度网络之一。Tiny face使用了图像金字塔和多种不同大小、不同宽高比的模板来检测不同大小人脸，并基于VGG-16网络\cite{simonyan2014very}，ResNet-101和ResNet-50网络\cite{he2016deep}结构都进行了实现。其中基于ResNet-101的实现在WIDER FACE测试集Hard部分的召回率达到了0.823\cite{hu2017finding}。
+Tiny face检测器\cite{hu2017finding}，是由Peiyun Hu等人提出的一种针对小脸进行优化处理的人脸检测器，也是最早针对小脸进行检测的深度网络之一。Tiny face使用了图像金字塔和多种不同大小、不同宽高比的模板来检测不同大小人脸，并基于VGG-16网络\cite{simonyan2014very}，ResNet-101和ResNet-50网络\cite{he2016deep}结构都进行了实现。其中基于ResNet-101的实现在WIDER FACE测试集Hard部分的召回率达到了0.823\cite{hu2017finding}。
 
 \subsection{在CFDDB上的测试结果}
 \label{chap2:tinyresult}

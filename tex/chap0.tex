@@ -73,3 +73,40 @@ TensorFlow最早是由Google Brain团队开发的一个使用数据流图进行�
 深度学习框架进行运算加速往往依赖于GPU，而我们在这个系统中使用了Nvidia公司开发的通用并行计算架构CUDA\cite{nickolls2008scalable}。这个架构赋予了GPU解决复杂计算问题的能力，尤其是图像处理中常见的矩阵运算，因此提高了整个系统的运算效率。
 
 CuDNN\cite{chetlur2014cudnn}是Nvidia公司推出的针对深度神经网络的GPU加速库，Caffe和TensorFlow等深度学习框架的加速都依赖于它。CuDNN对常见的深度神经网络中的操作使用CUDA进行了精细优化，使得研究者们可以专心构建网络而不用花费大量时间优化网络。
+
+\section{研究内容与主要工作}
+
+\subsection{数据集与标注}
+
+\begin{enumerate}
+	\item 根据无感知人脸识别的特点和要求，建立描述无感知人脸识别场景的数据集CFDDB。
+	\item 标注人脸图像，对标注进行纠错和预处理。
+	\item 分析CFDDB中的数据特征，定义合理的测试参数，制定人脸检测算法的测试策略。
+	\item 建立人脸特征向量数据库，制定人脸识别算法的测试策略。
+	\item 设计改进和扩充CFDDB的流程。
+\end{enumerate}
+
+\subsection{人脸检测与识别算法的测试与调参}
+
+\begin{enumerate}
+	\item 在CFDDB上测试基于HAAR特征的级联分类器并分析其性能。
+	\item 在CFDDB上测试MtCNN并分析其性能。
+	\item 在CFDDB上测试SSH检测器并进行参数调优。
+	\item 在CFDDB上测试Tiny face检测器。
+	\item 在CFDDB上测试InsightFace，
+\end{enumerate}
+
+\subsection{匹配算法的设计与优化}
+
+\begin{enumerate}
+	\item 设计小规模数据集的匹配算法，分析其时间效率与空间效率。
+	\item 设计大规模数据集的匹配算法，选择合理的优化策略。
+\end{enumerate}
+
+\subsection{无感知人脸识别系统的架构设计}
+
+\begin{enumerate}
+	\item 设计数据处理流程，明确数据格式和存储结构。
+	\item 设计设备网络拓扑结构，。
+	\item 设计系统逻辑架构，确保系统。
+\end{enumerate}

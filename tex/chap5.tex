@@ -2,17 +2,17 @@
 
 \section{概述}
 
-无感知人脸识别系统的架构设计主要分为三部分：数据架构、物理架构和逻辑架构。其中，数据架构主要描述系统中的数据存储结构，数据格式和数据流动情况。物理架构主要描述系统中所有机器的物理部署特征，网络拓扑等。逻辑架构主要描述系统实现代码中所有的模块和组件，以及不同模块组件之间的交互与职能分配。
+无感知人脸识别系统的架构设计主要分为三部分：数据处理流程、设备网络拓扑结构和系统逻辑架构。其中，数据处理流程主要描述系统中的数据存储结构，数据格式和数据流动情况。设备网络拓扑结构主要描述系统中所有机器的物理部署特征，网络拓扑等。系统逻辑架构主要描述系统实现代码中所有的模块和组件，以及不同模块组件之间的交互与职能分配。
 
-\section{数据架构}
+\section{数据处理流程}
 
-无感知人脸识别系统的数据架构如图\ref{fig:chap5:data}所示：
+无感知人脸识别系统的数据处理流程如图\ref{fig:chap5:data}所示：
 
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=1.7cm]{chap5/1.jpg}
-	\bicaption[系统数据架构图]
-	{系统数据架构图}
+	\bicaption[系统数据处理流程图]
+	{系统数据处理流程图}
 	{System data architecture}
 	\label{fig:chap5:data}
 \end{figure}
@@ -27,15 +27,15 @@
 
 最后，根据每条身份信息的标记，将某一用户请求的所有身份信息返回给用户。
 
-\section{物理架构}
+\section{设备网络拓扑结构}
 
-无感知人脸识别系统的物理架构如图\ref{fig:chap5:phy}所示：
+无感知人脸识别系统的设备网络拓扑结构如图\ref{fig:chap5:phy}所示：
 
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=4cm]{chap5/2.jpg}
-	\bicaption[系统物理架构图]
-	{系统物理架构图}
+	\bicaption[系统设备网络拓扑结构图]
+	{系统设备网络拓扑结构图}
 	{System physical architecture}
 	\label{fig:chap5:phy}
 \end{figure}
@@ -47,15 +47,15 @@
 在系统的实际部署中，由于摄像设备和嵌入式设备的输入众多，网络拓扑结构会更为复杂，网络中很可能需要增加一些中间节点。如果GPU服务器集群不在本地而在云端，则整个网络传输就无法在一个局域网内进行。此时则需要考虑网络带宽对数据传输的影响。如果网络带宽不足，可会影响获取到的图片的传输速度，进而影响总体的识别速度。同时，如果GPU服务器集群和人脸数据库之间的传输需要经过公有网络，则考虑网络带宽的同时还需要考虑传输安全的问题。
 
 
-\section{逻辑架构}
+\section{系统逻辑架构}
 
-无感知人脸识别系统的逻辑架构如图\ref{fig:chap5:logic}所示：
+无感知人脸识别系统的系统逻辑架构如图\ref{fig:chap5:logic}所示：
 
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=2.5cm]{chap5/3.jpg}
-	\bicaption[系统逻辑架构图]
-	{系统逻辑架构图}
+	\bicaption[系统系统逻辑架构图]
+	{系统系统逻辑架构图}
 	{System logical architecture}
 	\label{fig:chap5:logic}
 \end{figure}
