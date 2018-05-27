@@ -9,7 +9,7 @@
 
 在本研究中，我们充分利用深度学习在人脸检测和识别的优势，选取了SSH检测器\cite{najibi2017ssh}进行人脸检测，InsightFace\cite{deng2018arcface}进行人脸识别。我们还从实际监控摄像中提取数据，建立了无感知人脸检测的测试集CFDDB。并在CFDDB上定义了基准参数，以分析不同人脸检测算法的优劣。
 
-不同规模数据下的人脸特征向量的匹配是本系统需要解决的另一个问题。本文探讨使用线性搜索和多类支持向量机匹配小规模数据，使用基于局部敏感哈希的近似搜索匹配大规模数据的方法。同时给出基于局部敏感哈希匹配算法的优化思路。
+不同规模数据下的人脸特征向量的匹配是本系统需要解决的另一个问题。本文探讨使用线性搜索和多类支持向量机匹配小规模数据，使用基于局部敏感哈希与基于有向图的近似搜索匹配大规模数据的方法。同时给出基于局部敏感哈希匹配算法的优化思路。
 
 本系统的实现充分考虑了数据处理流程、设备网络拓扑结构、以及系统逻辑架构等的设计，从而使系统具有高效、稳定、可扩展的特性。本文在最后对这部分内容进行了阐述。
 
@@ -18,12 +18,14 @@
 
 \begin{englishabstract}
 
-Imperceptible face recognition system is a face recognition system which does not require intentional cooperation from users. This system pulls live images of faces from CCTV at first. Then it performs face detection, face counting and face recognition to get face embeddings. Finally, it matches face embeddings to database contents. This system can be widely used for student attendance management and access control in companies. Since this system does not rely on users’ cooperation, the facial images received would be angled, blurred and occluded, which makes detection and recognition very challenging. We use deep-learning based methods to present a robust solution. In this system, SSH detector\cite{najibi2017ssh} is used for face detection and InsightFace\cite{deng2018arcface} is used for face recognition. And we also introduce CFDDB dataset as a face detection benchmark. 
+The non-perceived face recognition system is a face recognition system that does not depend on the active cooperation of the person to be detected. This system uses the real-time image of the surveillance camera to detect, count, and identify the faces in the camera. It has a wide range of applications in student attendance management and access control in companies and other practical scenarios. Because it does not rely on the cooperation of the detected person, images of faces will exhibit features such as deflection, blur, and occlusion, which poses very high requirements for detection and recognition algorithms.
 
-Another challenge is matching face embeddings. For small-scale datasets, we use linear search and multi-class SVM. For large-scale datasets, we use algorithms based on locality sensitive hashing and discuss some optimization methods.
+In this paper, we make full use of the advantages of deep learning in face detection and recognition. We selected SSH detector \cite{najibi2017ssh} for face detection and InsightFace\cite{deng2018arcface} for face recognition. We also extracted data from actual surveillance cameras and established a test set CFDDB with no perceptual face detection. The benchmark parameters are defined on CFDDB to analyze the advantages and disadvantages of different face detection algorithms.
 
-We present our system’s data architecture, physical architecture and logical architecture at the end. This architecture design keeps imperceptible face recognition system efficient, stable and scalable.
+The matching of face feature vectors under different scale data is another challenge. This paper discusses the use of linear search and multi-class support vector machines to match small-scale data, and uses LSH-based approximate search algorithm or directed graph based algorithm to match large-scale data. At the same time, the optimization method of LSH-based approximate search algorithm is discussed.
 
-\englishkeywords{\large imperceptible face detection, approximate nearest neighbor search, deep-learning}
+The implementation of this system fully considers data processing flow, equipment network topology, and system logic architecture, so that the system is highly efficient, stable, and scalable.
+
+\englishkeywords{\large  non-perceived face detection, approximate nearest neighbor search, deep-learning}
 \end{englishabstract}
 
