@@ -4,28 +4,32 @@
 %%==================================================
 
 \begin{abstract}
+	
+模糊搜索是一类搜索相同或相似数据的搜索方法。本文针对无感知环境下的大规模人脸数据的模糊搜索，从人脸检测，特征提取与向量匹配三方面进行研究，最终实现了完整的无感知人脸识别系统。
 
 无感知人脸识别系统是一种不依赖待检测者主动配合的人脸识别系统。这种系统利用监控摄像头的实时画面，对其中的人脸进行检测、计数和识别。在教室点名、公司打卡签到等实际场景中有广泛的应用。由于不依赖于被检测人的配合，人脸的图像会呈现偏转、模糊和遮挡等特征，这对检测与识别算法都提出了非常高的要求。
 
-在本研究中，我们充分利用深度学习在人脸检测和识别的优势，选取了SSH检测器\cite{najibi2017ssh}进行人脸检测，InsightFace\cite{deng2018arcface}进行人脸识别。我们还从实际监控摄像中提取数据，建立了无感知人脸检测的测试集CFDDB。并在CFDDB上定义了基准参数，以分析不同人脸检测算法的优劣。
+深度学习在人脸检测和特征提取方面有着广泛的应用。本文选取SSH检测器\cite{najibi2017ssh}进行人脸检测，InsightFace\cite{deng2018arcface}进行特征提取。我们还从实际监控摄像中提取数据，建立了无感知人脸检测的测试集CFDDB。并在CFDDB上定义了基准参数，以分析不同人脸检测算法的优劣。
 
-不同规模数据下的人脸特征向量的匹配是本系统需要解决的另一个问题。本文探讨使用线性搜索和多类支持向量机匹配小规模数据，使用基于局部敏感哈希与基于有向图的近似搜索匹配大规模数据的方法。同时给出基于局部敏感哈希匹配算法的优化思路。
+大规模特征向量的匹配是人脸模糊搜索需要解决的另一个问题。本文讨论基于局部敏感哈希与基于有向图的近似搜索算法进行高效的向量匹配，同时给出基于局部敏感哈希匹配算法的优化思路。
 
-本系统的实现充分考虑了数据处理流程、设备网络拓扑结构、以及系统逻辑架构等的设计，从而使系统具有高效、稳定、可扩展的特性。本文在最后对这部分内容进行了阐述。
+本系统的实现充分考虑了数据处理流程、设备网络拓扑结构、以及系统逻辑架构等的设计，从而使系统具有稳定和可扩展的特性。本文在最后对这部分内容进行了阐述。
 
-\keywords{\large 无感知人脸检测 \quad 近似搜索 \quad 深度学习}
+\keywords{\large 模糊搜索 \quad 无感知人脸检测 \quad 大规模数据 \quad 向量匹配 \quad 深度学习}
 \end{abstract}
 
 \begin{englishabstract}
 
-The non-perceived face recognition system is a face recognition system that does not depend on the active cooperation of the person to be detected. This system uses the real-time image of the surveillance camera to detect, count, and identify the faces in the camera. It has a wide range of applications in student attendance management and access control in companies and other practical scenarios. Because it does not rely on the cooperation of the detected person, images of faces will exhibit features such as deflection, blur, and occlusion, which poses very high requirements for detection and recognition algorithms.
+Approximate search is a type of search method that searches for the same or similar data. This paper focuses on the approximate search of large-scale face data, from the aspects of face detection, feature extraction and vector matching, and finally implements a complete imperceptible face recognition system.
 
-In this paper, we make full use of the advantages of deep learning in face detection and recognition. We selected SSH detector \cite{najibi2017ssh} for face detection and InsightFace\cite{deng2018arcface} for face recognition. We also extracted data from actual surveillance cameras and established a test set CFDDB with no perceptual face detection. The benchmark parameters are defined on CFDDB to analyze the advantages and disadvantages of different face detection algorithms.
+Imperceptible face recognition system is a face recognition system which does not require intentional cooperation from users. This system pulls live images of faces from surveillance cameras at first. Then it performs face detection, face counting and face recognition to get face embeddings. Finally, it matches face embeddings to database contents. This system can be widely used for student attendance management and access control in companies. Since this system does not rely on users’ cooperation, the facial images received would be angled, blurred and occluded, which makes detection and recognition very challenging.
 
-The matching of face feature vectors under different scale data is another challenge. This paper discusses the use of linear search and multi-class support vector machines to match small-scale data, and uses LSH-based approximate search algorithm or directed graph based algorithm to match large-scale data. At the same time, the optimization method of LSH-based approximate search algorithm is discussed.
+Deep learning has a wide range of applications in face detection and feature extraction. In this paper, we use SSH detector \cite{najibi2017ssh} for face detection and InsightFace\cite{deng2018arcface} for feature extraction. We also pull data from surveillance cameras and present an imperceptible face detection benchmark CFDDB. The benchmark parameters are defined to analyze the performance of different face detection algorithms.
 
-The implementation of this system fully considers data processing flow, equipment network topology, and system logic architecture, so that the system is highly efficient, stable, and scalable.
+The matching of large-scale feature vectors is another challenge that needs to be solved for approximate search of face data. In this paper, efficient vector matching algorithms based on LSH or directed graph are discussed. At the same time, the optimized method for algorithm based on LSH is given.
 
-\englishkeywords{\large  non-perceived face detection, approximate nearest neighbor search, deep-learning}
+We present our system’ s data architecture, physical architecture and logical architecture at the end. This architecture design keeps imperceptible face recognition system efficient, stable and scalable.
+
+\englishkeywords{\large approximate search, imperceptible face detection, large-scale data, vector matching, deep-learning}
 \end{englishabstract}
 

@@ -1,7 +1,7 @@
-\chapter{人脸识别算法}
+\chapter{特征提取算法}
 \label{facerecognition}
 
-在检测到人脸区域的之后就需要对区域内的人脸图像进行特征提取和识别。目前最先进的人脸识别思路是将人脸图片经过深度神经网络的处理得到高维的人脸特征向量。然后使用这些特征向量进行人脸搜索与匹配。
+在检测到人脸区域的之后就需要对区域内的人脸图像进行特征提取。目前最先进的特征提取思路是将人脸图片经过深度神经网络的处理得到高维的人脸特征向量。然后使用这些特征向量进行人脸搜索与匹配。
 
 事实上，我们可以将得到高维人脸特征向量的过程看作是一种映射。我们使用的深度神经网络就是一种映射。相同或相似的人脸图像由这种映射得到的向量具有较近的距离，而差异较大的人脸图像经过映射得到的向量具有较远的距离。
 
@@ -16,19 +16,19 @@
 recall = \frac{face_{right}}{face_{all}} 
 \end{equation}
 
-由于CFDDB目前只能粗略测得人脸识别算法的准确性，我们要求合格的人脸识别算法需要$recall>50\%$。
+由于CFDDB目前只能粗略测得特征提取算法的准确性，我们要求合格的特征提取算法需要$recall>50\%$。
 
 \section{InsightFace\cite{deng2018arcface}简介}
 
 使用深度神经网络检测人脸的方法有很多，它们主要的不同点有三个：
 
-第一，训练数据。对于深度神经网络而言，通常训练数据越多，得到的模型就越精确。人脸识别中使用的公开训练数据集主要有VGG-Face\cite{parkhi2015deep}，VGG2-Face\cite{cao2017vggface2}，CASIA-WebFace\cite{yi2014learning}，UMDFaces\cite{bansal2017umdfaces}，MS-Celeb-1M\cite{guo2016msceleb}和Megaface\cite{nech2017level}等。而Google等公司的私有数据集甚至拥有数百万的不同人脸数据，可以训练出商用的人脸识别网络。
+第一，训练数据。对于深度神经网络而言，通常训练数据越多，得到的模型就越精确。特征提取中使用的公开训练数据集主要有VGG-Face\cite{parkhi2015deep}，VGG2-Face\cite{cao2017vggface2}，CASIA-WebFace\cite{yi2014learning}，UMDFaces\cite{bansal2017umdfaces}，MS-Celeb-1M\cite{guo2016msceleb}和Megaface\cite{nech2017level}等。而Google等公司的私有数据集甚至拥有数百万的不同人脸数据，可以训练出商用的特征提取网络。
 
-第二，网络结构。与使用CNN网络的人脸检测器类似，研究者们也为人脸识别设计了许多不同的网络。常见的有ResNet系列网络\cite{he2016deep}，VGG系列网络\cite{simonyan2014very}和MobileNets\cite{howard2017mobilenets}等等。
+第二，网络结构。与使用CNN网络的人脸检测器类似，研究者们也为特征提取设计了许多不同的网络。常见的有ResNet系列网络\cite{he2016deep}，VGG系列网络\cite{simonyan2014very}和MobileNets\cite{howard2017mobilenets}等等。
 
 第三，Loss函数。不同的神经网络有着不同的Loss函数设计，常见的有Euclidean margin based loss和Angular and cosine margin based loss两大类。
 
-而我们使用的InsightFace其训练数据为MS-Celeb-1M\cite{guo2016msceleb}与VGG2\cite{cao2017vggface2}数据集，网络结构基于MXNet\cite{chen2015mxnet}，使用additive angular margin作为Loss函数。由于InsightFace在Megaface测试集上取得了国际领先的测试结果，我们选择它作为人脸识别模块的核心方法。
+而我们使用的InsightFace其训练数据为MS-Celeb-1M\cite{guo2016msceleb}与VGG2\cite{cao2017vggface2}数据集，网络结构基于MXNet\cite{chen2015mxnet}，使用additive angular margin作为Loss函数。由于InsightFace在Megaface测试集上取得了国际领先的测试结果，我们选择它作为特征提取模块的核心方法。
 
 \section{在CFDDB上的测试结果}
 
