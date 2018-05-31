@@ -1,4 +1,4 @@
-\chapter{人脸检测算法}
+\chapter{人脸检测与特征提取算法}
 \label{chap:facedetection}
 
 人脸检测算法自上世纪以来已经被无数研究者探究过，检测的准确率也逐年提高。在本系统中，我们需要的是一个能够优秀的处理大角度人脸、模糊人脸甚至部分被遮挡人脸的检测算法。在保证非常高的准确率的同时，该算法需要有非常快的执行速度，以适应同时处理大量图片的需求。
@@ -21,7 +21,7 @@ HAAR特征在物体检测领域有着广泛的应用，在2001年，Paul Viola�
 	\hspace{4em}
 	\subcaptionbox{线特征\label{fig:HAAR:C}}
 	{\includegraphics[height=3cm]{chap2/3.jpg}}
-	\bicaption{三种HAAR特征}{Three HAAR features}
+	\caption{三种HAAR特征}
 	\label{fig:HAAR}
 \end{figure}
 
@@ -41,9 +41,8 @@ HAAR特征在物体检测领域有着广泛的应用，在2001年，Paul Viola�
 
 \begin{table}[!hpb]
 	\centering
-	\bicaption[HAAR级联分类器在CFDDB上的测试结果]
+	\caption
 	{HAAR级联分类器在CFDDB上的测试结果}
-	{HAAR cascade classifier results on CFDDB}
 	\label{tab:haar}
 	\begin{tabular}{ ccccc | c }
 		\hline
@@ -79,7 +78,7 @@ HAAR特征在物体检测领域有着广泛的应用，在2001年，Paul Viola�
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=7cm]{chap2/4.png}
-	\bicaption{scaleFactor与minNeighbor参数对于处理速度的影响}{How parameter scaleFactor and minNeighbor affects processing speed}
+	\caption{scaleFactor与minNeighbor参数对于处理速度的影响}
 	\label{fig:haartest:speed}
 \end{figure}
 
@@ -90,7 +89,7 @@ HAAR级联分类器在CFDDB上召回率最高尚未超过$50\%$，没有达到�
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=4cm]{chap2/5.jpg}
-	\bicaption{有角度和被遮挡的人脸识别结果示例}{Example of angled faces and partially blocked faces}
+	\caption{有角度和被遮挡的人脸识别结果示例}
 	\label{fig:haartest:acc}
 \end{figure}
 
@@ -101,7 +100,7 @@ HAAR级联分类器在CFDDB上召回率最高尚未超过$50\%$，没有达到�
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=4cm]{chap2/6.jpg}
-	\bicaption{HAAR分类器误识别示例}{Haar cascade classifier misidentification example}
+	\caption{HAAR分类器误识别示例}
 	\label{fig:haartest:acc2}
 \end{figure}
 
@@ -126,7 +125,7 @@ MtCNN中共包括三个不同的网络，三个不同的网络，即P-Net, R-Net
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=7cm]{chap2/7.jpg}
-	\bicaption{MtCNN 总体架构图\cite{zhang2016joint}}{MtCNN overall pipeline\cite{zhang2016joint}}
+	\caption{MtCNN 总体架构图\cite{zhang2016joint}}
 	\label{fig:mtcnn}
 \end{figure}
 
@@ -167,9 +166,7 @@ L_{i}^{landmark}=||{\hat{y}_i^{landmark}-y_i^{landmark}}||_2^2
 
 \begin{table}[!hpb]
 	\centering
-	\bicaption[MtCNN在CFDDB上的测试结果]
-	{MtCNN在CFDDB上的测试结果}
-	{MtCNN test results on CFDDB}
+	\caption{MtCNN在CFDDB上的测试结果}
 	\label{tab:mtcnn}
 	\begin{tabular}{ cccc | c }
 		\hline
@@ -196,7 +193,7 @@ L_{i}^{landmark}=||{\hat{y}_i^{landmark}-y_i^{landmark}}||_2^2
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=5cm]{chap2/8.png}
-	\bicaption{MtCNN 识别结果可视化样例}{MtCNN detect results example}
+	\caption{MtCNN 识别结果可视化样例}
 	\label{fig:mtcnn:accr}
 \end{figure}
 
@@ -228,21 +225,21 @@ SSH的全称为Single Stage Headless face detector\cite{najibi2017ssh}，由Mahy
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=7cm]{chap2/8.jpg}
-	\bicaption{SSH 检测器总体架构\cite{najibi2017ssh}}{SSH face detector general architecture\cite{najibi2017ssh}}
+	\caption{SSH 检测器总体架构\cite{najibi2017ssh}}
 	\label{fig:ssh:arc}
 \end{figure}
 
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=3cm]{chap2/9.jpg}
-	\bicaption{SSH 检测模块\cite{najibi2017ssh}}{SSH detection module\cite{najibi2017ssh}}
+	\caption{SSH 检测模块\cite{najibi2017ssh}}
 	\label{fig:ssh:det}
 \end{figure}
 
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=3cm]{chap2/10.jpg}
-	\bicaption{SSH 背景环境模块\cite{najibi2017ssh}}{SSH context module\cite{najibi2017ssh}}
+	\caption{SSH 背景环境模块\cite{najibi2017ssh}}
 	\label{fig:ssh:context}
 \end{figure}
 
@@ -260,9 +257,7 @@ SSH检测器为单阶段检测器，并没有产生边界框候选集的阶段�
 
 \begin{table}[!hpb]
 	\centering
-	\bicaption[SSH检测器在CFDDB上的测试结果]
-	{SSH在CFDDB上的测试结果}
-	{SSH test results on CFDDB}
+	\caption{SSH在CFDDB上的测试结果}
 	\label{tab:ssh}
 	\begin{tabular}{ cccc | c }
 		\hline
@@ -291,11 +286,9 @@ SSH检测器为单阶段检测器，并没有产生边界框候选集的阶段�
 
 虽然SSH检测满足了我们的检测条件，但是我们在测试中也发现了SSH存在的一些待改进的问题。
 
-首先，SSH检测器目前只有Caffe平台的实现，这对于测试和部署都是一项极大的挑战。Caffe平台虽然功能强大，但是搭建GPU支持的Caffe框架却必须从源码进行编译。这就意味和每次部署搭建环境时都必须安装数量庞大的依赖库，并下载源码编译。整个过程需要耗费大量的时间，不利于规模性部署。而且随着Caffe平台的维护力度逐渐减小，最新版本的显卡驱动和深度神经网络加速库均无法使用，使得网络的运行效率下降。同时，Caffe平台对于嵌入式设备的支持优化较少，不利于将识别模块移植到嵌入式平台上使用。
+第一，SSH检测器基于性能较弱的VGG-16网络\cite{simonyan2014very}改进而来，存在提升的空间。如果将其中的VGG-16网络替换为对应的MobileNets网络\cite{howard2017mobilenets}，或者MobileNetsV2网络\cite{sandler2018inverted}，则不仅可以提升网络的运行速度，而且更方便将网络移植到嵌入式设备等没有GPU支持的设备中使用。
 
-其次，SSH检测器基于性能较弱的VGG-16网络\cite{simonyan2014very}改进而来，存在提升的空间。如果将其中的VGG-16网络替换为对应的MobileNets网络\cite{howard2017mobilenets}，或者MobileNetsV2网络\cite{sandler2018inverted}，则不仅可以提升网络的运行速度，而且更方便将网络移植到嵌入式设备等没有GPU支持的设备中使用。
-
-最后，SSH检测器难以兼容使用TensorFlow平台实现的人脸识别算法。由于Caffe平台和TensorFlow平台使用了不同版本的Protocol Buffer依赖库，如果希望能够同时运行两个平台就需要安装老旧版本的TensorFlow平台并进行一些繁琐的设置。这不仅损失了人脸识别算法的运行效率，而且给规模化部署带来了更多的挑战。
+第二，SSH检测器难以兼容使用TensorFlow平台实现的人脸识别算法。由于Caffe平台和TensorFlow平台使用了不同版本的Protocol Buffer依赖库，如果希望能够同时运行两个平台就需要安装老旧版本的TensorFlow平台并进行一些繁琐的设置。这不仅损失了人脸识别算法的运行效率，而且给规模化部署带来了更多的挑战。
 
 \section{Tiny face检测器}
 
@@ -310,9 +303,7 @@ Tiny face检测器\cite{hu2017finding}，是由Peiyun Hu等人提出的一种针
 
 \begin{table}[!hpb]
 	\centering
-	\bicaption[Tiny face检测器在CFDDB上的测试结果]
-	{Tiny face检测器在CFDDB上的测试结果}
-	{Tiny face detector test results on CFDDB}
+	\caption{Tiny face检测器在CFDDB上的测试结果}
 	\label{tab:tiny}
 	\begin{tabular}{ cccc | c }
 		\hline
@@ -345,9 +336,7 @@ Tiny face检测器\cite{hu2017finding}，是由Peiyun Hu等人提出的一种针
 
 \begin{table}[!hpb]
 	\centering
-	\bicaption[Tiny face检测器与SSH检测器对比分析表]
-	{Tiny face检测器与SSH检测器对比分析表}
-	{Tiny face detector and SSH detector comparision table}
+	\caption{Tiny face检测器与SSH检测器对比分析表}
 	\label{tab:tinyandssh}
 	\begin{tabular}{ c|ccc|ccc }
 		\hline
@@ -364,6 +353,58 @@ Tiny face检测器\cite{hu2017finding}，是由Peiyun Hu等人提出的一种针
 
 根据$\alpha$的定义知，当召回率越高的时候$\alpha$的值越小，当误判率越低时$\alpha$的值越小，因此，$\alpha$的值越小，代表了当前检测算法的性能越优秀。从表\ref{tab:tinyandssh}中可以清晰的看出，无论参数confidence的值是多少，SSH检测器的$\alpha$值总是小于Tiny face检测器的$\alpha$值。因此，综合考虑召回率和误判率的情况下，SSH检测器依然优于Tiny face检测器。
 
+\section{特征提取算法}
 
+在检测到人脸区域的之后就需要对区域内的人脸图像进行特征提取。目前最先进的特征提取思路是将人脸图片经过深度神经网络的处理得到高维的人脸特征向量。然后使用这些特征向量进行人脸搜索与匹配。
+
+事实上，我们可以将得到高维人脸特征向量的过程看作是一种映射。我们使用的深度神经网络就是一种映射。相同或相似的人脸图像由这种映射得到的向量具有较近的距离，而差异较大的人脸图像经过映射得到的向量具有较远的距离。
+
+特征向量间的距离定义也有很多种，有些是欧式距离，有些是角度距离。而如果网络输出的特征向量都进行了标准化处理，就可以用两个特征向量的点积作为距离的衡量标准。在这种情况下，两个特征向量的点积越接近$1$，则两个特征向量对应的人脸就越相像；越接近$-1$，则两个特征向量对应的人脸差异越大。
+
+在实际算法中，大多数算法在识别之前都有将人脸校正的需要。校正操作就是通过检测到人脸的多个特征点进行运算，从而将带有较大角度的人脸转换为相应正脸的过程。由于这种过程需要检测人脸的特征点，许多算法都使用了在人脸检测算法中提到的MtCNN网络\cite{zhang2016joint}进行校正操作。
+
+如果全部可识别的人脸数量为$face_{all}$，识别正确的人脸数量为$face_{right}$定义召回率$recall$为：
+
+\begin{equation}
+\label{eq:rrdef}
+recall = \frac{face_{right}}{face_{all}} 
+\end{equation}
+
+由于CFDDB目前只能粗略测得特征提取算法的准确性，我们要求合格的特征提取算法需要$recall>50\%$。
+
+\subsection{InsightFace简介}
+
+使用深度神经网络检测人脸的方法有很多，它们主要的不同点有三个：
+
+第一，训练数据。对于深度神经网络而言，通常训练数据越多，得到的模型就越精确。特征提取中使用的公开训练数据集主要有VGG-Face\cite{parkhi2015deep}，VGG2-Face\cite{cao2017vggface2}，CASIA-WebFace\cite{yi2014learning}，UMDFaces\cite{bansal2017umdfaces}，MS-Celeb-1M\cite{guo2016msceleb}和Megaface\cite{nech2017level}等。而Google等公司的私有数据集甚至拥有数百万的不同人脸数据，可以训练出商用的特征提取网络。
+
+第二，网络结构。与使用CNN网络的人脸检测器类似，研究者们也为特征提取设计了许多不同的网络。常见的有ResNet系列网络\cite{he2016deep}，VGG系列网络\cite{simonyan2014very}和MobileNets\cite{howard2017mobilenets}等等。
+
+第三，Loss函数。不同的神经网络有着不同的Loss函数设计，常见的有Euclidean margin based loss和Angular and cosine margin based loss两大类。
+
+而我们使用的InsightFace\cite{deng2018arcface}其训练数据为MS-Celeb-1M\cite{guo2016msceleb}与VGG2\cite{cao2017vggface2}数据集，网络结构基于MXNet\cite{chen2015mxnet}，使用additive angular margin作为Loss函数。由于InsightFace在Megaface测试集上取得了国际领先的测试结果，我们选择它作为特征提取模块的核心方法。
+
+\subsection{在CFDDB上的测试结果}
+
+下表\ref{tab:arcface}展示了InsightFace在CFDDB上的测试结果。其中参数confidence表示两特征向量的最小信任值。即如果一张图片的特征向量与人脸标准数据库中所有的特征向量的点积值均低于confidence，则认为该图片中的人脸不属于人脸标准数据库中的任何一张人脸。参数faceRecongnized参数表示当前人脸标准数据库中的可识别的人脸数量，参数faceRecognizeRight表示识别正确的人脸数量。
+
+\begin{table}[!hpb]
+	\centering
+	\caption{InsightFace在CFDDB上的测试结果}
+	\label{tab:arcface}
+	\begin{tabular}{ ccc | c }
+		\hline
+		confidence & faceRecognized & faceRecognizeRight &  recall\\
+		\hline
+		0.90 & 249 & 193 & $77.51\%$\\
+		0.80 & 412 & 558 & $73.84\%$\\
+		0.70 & 543 & 711 & $76.37\%$\\
+		0.60 & 838 & 649 & $77.44\%$\\
+		0.50 & 916 & 691 & $75.44\%$\\
+		\hline
+	\end{tabular}
+\end{table}
+
+分析表\ref{tab:arcface}中的测试结果可以看出，调整confidence参数从0.5至0.9，召回率均超过$70\%$，符合系统的要求。
 
 

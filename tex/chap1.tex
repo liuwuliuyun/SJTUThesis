@@ -17,7 +17,7 @@
 		\includegraphics[width=6cm,height=4cm]{chap1/2.jpg}
 		\caption{CFDDB 测试集样例图片}
 	\end{subfigure}
-	\bicaption{WIDER FACE与CFDDB样例图片对比图}{Sample picture comparision between WIDER FACE and CFDDB}
+	\caption{WIDER FACE与CFDDB样例图片对比图}
 	\label{fig:chap1:pic}
 \end{figure}
 
@@ -29,7 +29,7 @@
 \begin{figure}[!htp]
 	\centering
 	\includegraphics[height=6cm]{chap1/3.jpg}
-	\bicaption{CFDDB 标注示例}{A lable example from CFDDB}
+	\caption{CFDDB 标注示例}
 	\label{fig:chap1:cfddblbexp}
 \end{figure}
 
@@ -63,6 +63,8 @@
 		\For {$i = 0 \to n-1$}
 		\State $result \gets result + Array[i]$
 		\EndFor
+		\State \Return{$result$}
+		\EndFunction
 		\algstore{a}
 	\end{algorithmic}
 \end{algorithm}
@@ -70,9 +72,6 @@
 \begin{algorithm}
 	\begin{algorithmic}[1]
 		\algrestore{a}
-		\State \Return{$result$}
-		\EndFunction
-		\State
 		\Function{Normalize}{$vector$}
 		\State $l\gets 128$
 		\State $norm\gets 0$
@@ -175,9 +174,8 @@ CFDDB测试集由于专注于课堂教室这个特殊的场景，适用于对教
 
 \begin{table}[!hpb]
 	\centering
-	\bicaption[CFDDB测试集属性]
+	\caption
 	{CFDDB测试集属性}
-	{CFDDB test dataset properties}
 	\label{tab:cfddbal}
 	\begin{tabular}{ c | ccccccc | c }
 		\hline
@@ -207,7 +205,7 @@ CFDDB测试集由于专注于课堂教室这个特殊的场景，适用于对教
 	\hspace{4em}
 	\subcaptionbox{人脸遮挡占比图\label{fig:chap1:cfddb3}}
 	{\includegraphics[height=4cm]{chap1/6.jpg}}
-	\bicaption{CFDDB属性分析}{CFDDB properties analysis}
+	\caption{CFDDB属性分析}
 	\label{fig:cfddbeval}
 \end{figure}
 
