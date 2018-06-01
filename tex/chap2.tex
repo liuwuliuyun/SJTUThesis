@@ -288,7 +288,7 @@ SSH检测器为单阶段检测器，并没有产生边界框候选集的阶段�
 
 第一，SSH检测器基于性能较弱的VGG-16网络\cite{simonyan2014very}改进而来，存在提升的空间。如果将其中的VGG-16网络替换为对应的MobileNets网络\cite{howard2017mobilenets}，或者MobileNetsV2网络\cite{sandler2018inverted}，则不仅可以提升网络的运行速度，而且更方便将网络移植到嵌入式设备等没有GPU支持的设备中使用。
 
-第二，SSH检测器难以兼容使用TensorFlow平台实现的人脸识别算法。由于Caffe平台和TensorFlow平台使用了不同版本的Protocol Buffer依赖库，如果希望能够同时运行两个平台就需要安装老旧版本的TensorFlow平台并进行一些繁琐的设置。这不仅损失了人脸识别算法的运行效率，而且给规模化部署带来了更多的挑战。
+第二，SSH检测器难以兼容使用TensorFlow平台实现的特征提取算法。由于Caffe平台和TensorFlow平台使用了不同版本的Protocol Buffer依赖库，如果希望能够同时运行两个平台就需要安装老旧版本的TensorFlow平台并进行一些繁琐的设置。这不仅损失了人脸识别算法的运行效率，而且给规模化部署带来了更多的挑战。
 
 \section{Tiny face检测器}
 
